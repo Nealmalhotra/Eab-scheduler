@@ -50,7 +50,7 @@ export async function POST() {
 
       const slots = [];
 
-      // Shivam - Non-technical only (Chou n150)
+      // Shivam - Non-technical only
       for (const time of timeSlots) {
         slots.push({
           room: 'Chou n150',
@@ -61,7 +61,7 @@ export async function POST() {
         });
       }
 
-      // Neal - Hardware & Software (Chou n258)
+      // Neal - Hardware & Software
       for (const time of timeSlots) {
         slots.push({
           room: 'Chou n258',
@@ -72,7 +72,7 @@ export async function POST() {
         });
       }
 
-      // Aryaman - Software only (Chou n115)
+      // Aryaman - Software only
       for (const time of timeSlots) {
         slots.push({
           room: 'Chou n115',
@@ -83,7 +83,7 @@ export async function POST() {
         });
       }
 
-      // Aryaman - Software only (Haas Library 206)
+      // Aryaman - Software only
       for (const time of timeSlots) {
         slots.push({
           room: 'Haas Library 206',
