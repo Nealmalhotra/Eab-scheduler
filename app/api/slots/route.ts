@@ -30,19 +30,19 @@ export async function GET(request: NextRequest) {
 
     // Get already booked slots for this date
     const bookedResult = await query(
-      `SELECT interviewer, time_slot
+      `SELECT room, time_slot
        FROM bookings
        WHERE date = $1`,
       [date]
     );
 
     const bookedSlots = new Set(
-      bookedResult.rows.map((b: any) => `${b.interviewer}-${b.time_slot}`)
+      bookedResult.rows.map((b: any) => `${b.room}-${b.time_slot}`)
     );
 
     // Filter out booked slots
     const availableSlots = slotsResult.rows.filter((slot: any) =>
-      !bookedSlots.has(`${slot.interviewer}-${slot.time_slot}`)
+      !bookedSlots.has(`${slot.room}-${slot.time_slot}`)
     );
 
     return NextResponse.json(availableSlots);

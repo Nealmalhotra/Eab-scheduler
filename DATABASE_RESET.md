@@ -1,27 +1,15 @@
-# Database Update Instructions
+# Database Reset Instructions
 
-The database schema and data need to be updated to match the actual schedule with:
-- Multiple interviewers per room at the same time
-- Correct time slot availability per interviewer
-- 5 rooms total (n150, n258, n115, Library 206, Library 207)
-- 7 interviewers (Shivam, Juhi, Neal, Deeya, Leon, Rishi, Casey, Aryaman)
+The database needs to be reset to match the actual schedule with correct interviewer pairs and time slots.
 
-## Step 1: Migrate Database Schema
+## Understanding the Schedule
 
-First, update the database constraints:
+- Each interview has **2 interviewers working together as a pair**
+- Example: "Shivam & Juhi" is ONE interview slot (they interview together)
+- 5 rooms: Chou n150, n258, n115, Haas Library 206, 207
+- Interviewer pairs work different times in different rooms
 
-```bash
-curl -X POST https://eab-scheduler.vercel.app/api/migrate-db
-```
-
-This will:
-1. Drop old UNIQUE constraint on `(room, date, time_slot)` from bookings
-2. Add new UNIQUE constraint on `(interviewer, date, time_slot)` to bookings
-3. Update time_slots table constraints to allow multiple interviewers per room
-
-## Step 2: Reset Data
-
-Then, populate with the correct schedule:
+## Reset the Database
 
 ```bash
 curl -X POST https://eab-scheduler.vercel.app/api/reset-db
@@ -29,22 +17,31 @@ curl -X POST https://eab-scheduler.vercel.app/api/reset-db
 
 This will:
 1. Delete all existing bookings and time slots
-2. Re-insert the actual schedule with correct interviewer availability
-3. Set up 30-minute intervals matching the provided schedule
+2. Re-insert 43 interview slots with correct interviewer pairs
+3. Set up 30-minute intervals matching your schedule
 
 ## What Gets Fixed
 
-- ✅ **Schema**: Unique constraints changed from room-based to interviewer-based
-- ✅ **Multiple interviewers**: Same room can have multiple interview slots at same time
 - ✅ **Correct schedule**: Neal has NO 9:00 AM or 9:30 AM slots
-- ✅ **5 rooms**: Chou n150, n258, n115, Haas Library 206, 207
-- ✅ **7 interviewers**: All interviewers with their correct time slots
-- ✅ **Interview types**: Shivam/Juhi/Rishi/Casey = non-technical only, Neal/Deeya/Leon = both technical types, Aryaman = software only
+- ✅ **Interviewer pairs**: Each slot shows the pair working together (e.g., "Shivam & Juhi")
+- ✅ **Room-based booking**: Only one interview per room at a time
+- ✅ **Interview types**: 
+  - Shivam/Juhi/Rishi/Casey pairs = non-technical only
+  - Neal/Deeya/Leon pairs = both tech-hardware and tech-software
+  - Aryaman/Deeya/Leon pairs = tech-software only
 
-## After Update
+## Expected Schedule (43 total slots)
+
+- **9:00 AM - 9:30 AM**: 1 slot (Chou n150 only)
+- **10:00 AM - 10:30 AM**: 3 slots each
+- **11:00 AM - 11:30 AM**: 2 slots each  
+- **12:00 PM - 3:30 PM**: 3 slots each
+- **4:00 PM - 4:30 PM**: 2 slots each
+
+## After Reset
 
 Refresh the booking page and verify:
-- 9:00 AM shows only Shivam and Juhi (in n150) - NO Neal or other tech interviewers
-- 10:00 AM shows correct distribution across all available rooms
-- Tech-software interviews at 10:00 AM show Neal, Deeya, Aryaman, and Leon as options
-- Non-technical interviews only show the correct interviewers (no technical-only people)
+- 9:00 AM shows only 1 option: Chou n150 (non-technical)
+- 10:00 AM tech-software shows 2 options: Chou n258, Haas Library 206
+- 10:00 AM non-technical shows 1 option: Chou n150
+- Interviewer names are NOT shown to students (only room names)

@@ -167,7 +167,7 @@ export default function BookingPage() {
                         {slot.time_slot}
                       </div>
                       <div className="text-sm">
-                        {slot.room} - {slot.interviewer}
+                        {slot.room}
                       </div>
                     </button>
                   ))}
