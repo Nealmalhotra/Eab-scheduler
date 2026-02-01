@@ -10,7 +10,7 @@ export default function Home() {
           </h1>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 gap-6">
           {/* Non-Technical Interview */}
           <Link
             href="/book/non-technical"
@@ -23,19 +23,7 @@ export default function Home() {
             </div>
           </Link>
 
-          {/* Technical Interview Type 1 */}
-          <Link
-            href="/book/tech-hardware"
-            className="bg-white border-2 border-black p-8 hover:bg-black hover:text-white transition-colors"
-          >
-            <div className="text-center">
-              <h3 className="text-xl font-semibold">
-                Technical Interview
-              </h3>
-            </div>
-          </Link>
-
-          {/* Technical Interview Type 2 */}
+          {/* Technical Interview */}
           <Link
             href="/book/tech-software"
             className="bg-white border-2 border-black p-8 hover:bg-black hover:text-white transition-colors"
