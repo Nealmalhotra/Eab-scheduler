@@ -68,30 +68,21 @@ export default function AdminPage() {
   }, {} as Record<string, Booking[]>);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 p-4">
+    <div className="min-h-screen bg-white p-4">
       <div className="max-w-7xl mx-auto py-8">
-        <div className="mb-6">
-          <Link
-            href="/"
-            className="text-gray-600 hover:text-gray-900 mb-4 inline-block"
-          >
-            ← Back to Home
-          </Link>
-        </div>
-
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="border-2 border-black p-8">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+            <h1 className="text-3xl font-bold text-black">Admin Dashboard</h1>
             <button
               onClick={fetchBookings}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+              className="px-4 py-2 bg-black text-white hover:bg-gray-800 transition-colors"
             >
               Refresh
             </button>
           </div>
 
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+            <div className="border-2 border-black px-4 py-3 mb-6">
               {error}
             </div>
           )}
@@ -103,35 +94,35 @@ export default function AdminPage() {
               placeholder="Search by name, email, room, or interviewer..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="flex-1 min-w-[300px] px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="flex-1 min-w-[300px] px-4 py-2 border-2 border-black focus:outline-none"
             />
             <div className="flex gap-2">
               <button
                 onClick={() => setFilter('all')}
-                className={`px-4 py-2 rounded-lg transition-colors ${
+                className={`px-4 py-2 border-2 border-black transition-colors ${
                   filter === 'all'
-                    ? 'bg-green-600 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    ? 'bg-black text-white'
+                    : 'bg-white text-black hover:bg-gray-100'
                 }`}
               >
                 All ({bookings.length})
               </button>
               <button
                 onClick={() => setFilter('confirmed')}
-                className={`px-4 py-2 rounded-lg transition-colors ${
+                className={`px-4 py-2 border-2 border-black transition-colors ${
                   filter === 'confirmed'
-                    ? 'bg-green-600 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    ? 'bg-black text-white'
+                    : 'bg-white text-black hover:bg-gray-100'
                 }`}
               >
                 Confirmed ({bookings.filter((b) => b.confirmed).length})
               </button>
               <button
                 onClick={() => setFilter('pending')}
-                className={`px-4 py-2 rounded-lg transition-colors ${
+                className={`px-4 py-2 border-2 border-black transition-colors ${
                   filter === 'pending'
-                    ? 'bg-green-600 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    ? 'bg-black text-white'
+                    : 'bg-white text-black hover:bg-gray-100'
                 }`}
               >
                 Pending ({bookings.filter((b) => !b.confirmed).length})
@@ -141,11 +132,11 @@ export default function AdminPage() {
 
           {loading ? (
             <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
-              <p className="text-gray-600">Loading bookings...</p>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
+              <p className="text-gray-700">Loading bookings...</p>
             </div>
           ) : filteredBookings.length === 0 ? (
-            <div className="text-center py-12 text-gray-500">
+            <div className="text-center py-12 text-gray-700">
               No bookings found
             </div>
           ) : (
@@ -154,37 +145,37 @@ export default function AdminPage() {
                 .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
                 .map((date) => (
                   <div key={date}>
-                    <h2 className="text-xl font-semibold text-gray-900 mb-4 pb-2 border-b">
+                    <h2 className="text-xl font-semibold text-black mb-4 pb-2 border-b-2 border-black">
                       {date}
                     </h2>
                     <div className="overflow-x-auto">
-                      <table className="min-w-full divide-y divide-gray-200">
-                        <thead className="bg-gray-50">
+                      <table className="min-w-full border-2 border-black">
+                        <thead className="bg-black text-white">
                           <tr>
-                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider border border-black">
                               Time
                             </th>
-                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider border border-black">
                               Type
                             </th>
-                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider border border-black">
                               Name
                             </th>
-                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider border border-black">
                               Email
                             </th>
-                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider border border-black">
                               Room
                             </th>
-                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider border border-black">
                               Interviewer
                             </th>
-                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider border border-black">
                               Status
                             </th>
                           </tr>
                         </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
+                        <tbody className="bg-white">
                           {bookingsByDate[date]
                             .sort((a, b) => {
                               const timeA = a.time_slot.toLowerCase();
@@ -192,12 +183,12 @@ export default function AdminPage() {
                               return timeA.localeCompare(timeB);
                             })
                             .map((booking) => (
-                              <tr key={booking.id} className="hover:bg-gray-50">
-                                <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              <tr key={booking.id} className="hover:bg-gray-100 border border-black">
+                                <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-black border border-black">
                                   {booking.time_slot}
                                 </td>
-                                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600">
-                                  <span className="px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800">
+                                <td className="px-4 py-4 whitespace-nowrap text-sm text-black border border-black">
+                                  <span className="px-2 py-1 border border-black text-xs">
                                     {booking.interview_type
                                       .split('-')
                                       .map(
@@ -207,25 +198,25 @@ export default function AdminPage() {
                                       .join(' ')}
                                   </span>
                                 </td>
-                                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
+                                <td className="px-4 py-4 whitespace-nowrap text-sm text-black border border-black">
                                   {booking.applicant_name}
                                 </td>
-                                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600">
+                                <td className="px-4 py-4 whitespace-nowrap text-sm text-black border border-black">
                                   {booking.applicant_email}
                                 </td>
-                                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600">
+                                <td className="px-4 py-4 whitespace-nowrap text-sm text-black border border-black">
                                   {booking.room}
                                 </td>
-                                <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-600">
+                                <td className="px-4 py-4 whitespace-nowrap text-sm text-black border border-black">
                                   {booking.interviewer}
                                 </td>
-                                <td className="px-4 py-4 whitespace-nowrap text-sm">
+                                <td className="px-4 py-4 whitespace-nowrap text-sm border border-black">
                                   {booking.confirmed ? (
-                                    <span className="px-2 py-1 rounded-full text-xs bg-green-100 text-green-800">
+                                    <span className="px-2 py-1 border border-black text-xs">
                                       Confirmed
                                     </span>
                                   ) : (
-                                    <span className="px-2 py-1 rounded-full text-xs bg-yellow-100 text-yellow-800">
+                                    <span className="px-2 py-1 border border-black text-xs">
                                       Pending
                                     </span>
                                   )}

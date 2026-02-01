@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { InterviewType } from '@/lib/types';
 
 interface AvailableSlot {
@@ -15,17 +14,14 @@ const interviewTypeConfig = {
   'non-technical': {
     title: 'Non-Technical Interview',
     description: 'Behavioral and fit interviews',
-    color: 'blue',
   },
   'tech-hardware': {
-    title: 'Technical Hardware Interview',
-    description: 'Hardware and embedded systems',
-    color: 'purple',
+    title: 'Technical Interview',
+    description: 'Technical assessment',
   },
   'tech-software': {
-    title: 'Technical Software Interview',
-    description: 'Software development and coding',
-    color: 'green',
+    title: 'Technical Interview',
+    description: 'Technical assessment',
   },
 };
 
@@ -109,32 +105,25 @@ export default function BookingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 p-4">
+    <div className="min-h-screen bg-white p-4">
       <div className="max-w-2xl mx-auto py-8">
-        <Link
-          href="/"
-          className="text-gray-600 hover:text-gray-900 mb-6 inline-block"
-        >
-          ← Back to Home
-        </Link>
-
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <div className="border-2 border-black p-8">
+          <h1 className="text-3xl font-bold text-black mb-2">
             {config.title}
           </h1>
-          <p className="text-gray-600 mb-2">{config.description}</p>
-          <p className="text-sm text-gray-500 mb-8">
+          <p className="text-gray-700 mb-2">{config.description}</p>
+          <p className="text-sm text-gray-600 mb-8">
             All interviews are on <strong>Monday, February 2, 2026</strong>
           </p>
 
           {success && (
-            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+            <div className="bg-black text-white px-4 py-3 mb-6">
               {success}
             </div>
           )}
 
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+            <div className="border-2 border-black bg-white px-4 py-3 mb-6">
               {error}
             </div>
           )}
@@ -142,11 +131,11 @@ export default function BookingPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Time Slot Selection */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-black mb-2">
                 Select Time Slot
               </label>
               {availableSlots.length === 0 ? (
-                <p className="text-gray-500 text-sm">
+                <p className="text-gray-600 text-sm">
                   No slots available
                 </p>
               ) : (
@@ -156,17 +145,17 @@ export default function BookingPage() {
                       key={idx}
                       type="button"
                       onClick={() => setSelectedSlot(slot)}
-                      className={`p-4 border-2 rounded-lg text-left transition-all ${
+                      className={`p-4 border-2 text-left transition-all ${
                         selectedSlot === slot
-                          ? 'border-green-500 bg-green-50'
-                          : 'border-gray-200 hover:border-green-300'
+                          ? 'border-black bg-black text-white'
+                          : 'border-black bg-white hover:bg-gray-100'
                       }`}
                     >
-                      <div className="font-semibold text-gray-900">
+                      <div className="font-semibold">
                         {slot.time_slot}
                       </div>
-                      <div className="text-sm text-gray-600">
-                        {slot.room} - {slot.interviewer}
+                      <div className="text-sm">
+                        {slot.room}
                       </div>
                     </button>
                   ))}
@@ -178,27 +167,27 @@ export default function BookingPage() {
             {selectedSlot && (
               <>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-black mb-2">
                     Full Name
                   </label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border-2 border-black focus:outline-none"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-black mb-2">
                     Email Address
                   </label>
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border-2 border-black focus:outline-none"
                     required
                   />
                 </div>
@@ -206,7 +195,7 @@ export default function BookingPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors disabled:bg-gray-400"
+                  className="w-full bg-black text-white py-3 font-semibold hover:bg-gray-800 transition-colors disabled:bg-gray-400"
                 >
                   {loading ? 'Booking...' : 'Book Interview'}
                 </button>

@@ -39,48 +39,58 @@ export async function POST() {
     const count = parseInt(existingSlots.rows[0].count);
 
     if (count === 0) {
-      // Insert default time slots (Monday = 1)
-      const slots = [
-        // Shivam - Non-technical only (Chou n150)
-        { room: 'Chou n150 (Nontechnical)', interviewer: 'Shivam', day: 1, time: '9:00 AM', types: ['non-technical'] },
-        { room: 'Chou n150 (Nontechnical)', interviewer: 'Shivam', day: 1, time: '10:00 AM', types: ['non-technical'] },
-        { room: 'Chou n150 (Nontechnical)', interviewer: 'Shivam', day: 1, time: '11:00 AM', types: ['non-technical'] },
-        { room: 'Chou n150 (Nontechnical)', interviewer: 'Shivam', day: 1, time: '12:00 PM', types: ['non-technical'] },
-        { room: 'Chou n150 (Nontechnical)', interviewer: 'Shivam', day: 1, time: '2:00 PM', types: ['non-technical'] },
-        { room: 'Chou n150 (Nontechnical)', interviewer: 'Shivam', day: 1, time: '3:00 PM', types: ['non-technical'] },
-        { room: 'Chou n150 (Nontechnical)', interviewer: 'Shivam', day: 1, time: '4:00 PM', types: ['non-technical'] },
-        { room: 'Chou n150 (Nontechnical)', interviewer: 'Shivam', day: 1, time: '5:00 PM', types: ['non-technical'] },
-
-        // Neal - Hardware & Software (Chou n258)
-        { room: 'Chou n258 (Software & Hardware)', interviewer: 'Neal', day: 1, time: '9:00 AM', types: ['tech-hardware', 'tech-software'] },
-        { room: 'Chou n258 (Software & Hardware)', interviewer: 'Neal', day: 1, time: '10:00 AM', types: ['tech-hardware', 'tech-software'] },
-        { room: 'Chou n258 (Software & Hardware)', interviewer: 'Neal', day: 1, time: '11:00 AM', types: ['tech-hardware', 'tech-software'] },
-        { room: 'Chou n258 (Software & Hardware)', interviewer: 'Neal', day: 1, time: '12:00 PM', types: ['tech-hardware', 'tech-software'] },
-        { room: 'Chou n258 (Software & Hardware)', interviewer: 'Neal', day: 1, time: '2:00 PM', types: ['tech-hardware', 'tech-software'] },
-        { room: 'Chou n258 (Software & Hardware)', interviewer: 'Neal', day: 1, time: '3:00 PM', types: ['tech-hardware', 'tech-software'] },
-        { room: 'Chou n258 (Software & Hardware)', interviewer: 'Neal', day: 1, time: '4:00 PM', types: ['tech-hardware', 'tech-software'] },
-        { room: 'Chou n258 (Software & Hardware)', interviewer: 'Neal', day: 1, time: '5:00 PM', types: ['tech-hardware', 'tech-software'] },
-
-        // Aryaman - Software only (Chou n115)
-        { room: 'Chou n115 (Software)', interviewer: 'Aryaman', day: 1, time: '9:00 AM', types: ['tech-software'] },
-        { room: 'Chou n115 (Software)', interviewer: 'Aryaman', day: 1, time: '10:00 AM', types: ['tech-software'] },
-        { room: 'Chou n115 (Software)', interviewer: 'Aryaman', day: 1, time: '11:00 AM', types: ['tech-software'] },
-        { room: 'Chou n115 (Software)', interviewer: 'Aryaman', day: 1, time: '12:00 PM', types: ['tech-software'] },
-        { room: 'Chou n115 (Software)', interviewer: 'Aryaman', day: 1, time: '2:00 PM', types: ['tech-software'] },
-        { room: 'Chou n115 (Software)', interviewer: 'Aryaman', day: 1, time: '3:00 PM', types: ['tech-software'] },
-        { room: 'Chou n115 (Software)', interviewer: 'Aryaman', day: 1, time: '4:00 PM', types: ['tech-software'] },
-        { room: 'Chou n115 (Software)', interviewer: 'Aryaman', day: 1, time: '5:00 PM', types: ['tech-software'] },
-
-        // Aryaman - Software only (Haas Library 206)
-        { room: 'Haas Library 206 (Software)', interviewer: 'Aryaman', day: 1, time: '9:00 AM', types: ['tech-software'] },
-        { room: 'Haas Library 206 (Software)', interviewer: 'Aryaman', day: 1, time: '10:00 AM', types: ['tech-software'] },
-        { room: 'Haas Library 206 (Software)', interviewer: 'Aryaman', day: 1, time: '11:00 AM', types: ['tech-software'] },
-        { room: 'Haas Library 206 (Software)', interviewer: 'Aryaman', day: 1, time: '12:00 PM', types: ['tech-software'] },
-        { room: 'Haas Library 206 (Software)', interviewer: 'Aryaman', day: 1, time: '2:00 PM', types: ['tech-software'] },
-        { room: 'Haas Library 206 (Software)', interviewer: 'Aryaman', day: 1, time: '3:00 PM', types: ['tech-software'] },
-        { room: 'Haas Library 206 (Software)', interviewer: 'Aryaman', day: 1, time: '4:00 PM', types: ['tech-software'] },
-        { room: 'Haas Library 206 (Software)', interviewer: 'Aryaman', day: 1, time: '5:00 PM', types: ['tech-software'] },
+      // Insert default time slots (Monday = 1) - 30 minute intervals
+      const timeSlots = [
+        '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
+        '12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM',
+        '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM'
       ];
+
+      const slots = [];
+
+      // Shivam - Non-technical only (Chou n150)
+      for (const time of timeSlots) {
+        slots.push({
+          room: 'Chou n150',
+          interviewer: 'Shivam',
+          day: 1,
+          time,
+          types: ['non-technical']
+        });
+      }
+
+      // Neal - Hardware & Software (Chou n258)
+      for (const time of timeSlots) {
+        slots.push({
+          room: 'Chou n258',
+          interviewer: 'Neal',
+          day: 1,
+          time,
+          types: ['tech-hardware', 'tech-software']
+        });
+      }
+
+      // Aryaman - Software only (Chou n115)
+      for (const time of timeSlots) {
+        slots.push({
+          room: 'Chou n115',
+          interviewer: 'Aryaman',
+          day: 1,
+          time,
+          types: ['tech-software']
+        });
+      }
+
+      // Aryaman - Software only (Haas Library 206)
+      for (const time of timeSlots) {
+        slots.push({
+          room: 'Haas Library 206',
+          interviewer: 'Aryaman',
+          day: 1,
+          time,
+          types: ['tech-software']
+        });
+      }
 
       for (const slot of slots) {
         await query(
@@ -95,7 +105,7 @@ export async function POST() {
       success: true,
       message: 'Database initialized successfully',
       tablesCreated: ['bookings', 'time_slots'],
-      slotsInserted: count === 0 ? 32 : 0,
+      slotsInserted: count === 0 ? slots.length : 0,
     });
   } catch (error: any) {
     console.error('Database initialization error:', error);

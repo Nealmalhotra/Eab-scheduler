@@ -29,49 +29,84 @@ CREATE TABLE IF NOT EXISTS time_slots (
   interview_types TEXT[] NOT NULL -- Array of interview types this slot supports
 );
 
--- Sample time slots (you can customize these based on your actual schedule)
--- This is based on the screenshot showing morning and afternoon slots
+-- Sample time slots - 30 minute intervals for Monday, Feb 2, 2026
 
 -- Shivam - Non-technical (Chou n150)
 INSERT INTO time_slots (room, interviewer, day_of_week, time_slot, interview_types) VALUES
 ('Chou n150', 'Shivam', 1, '9:00 AM', ARRAY['non-technical']),
+('Chou n150', 'Shivam', 1, '9:30 AM', ARRAY['non-technical']),
 ('Chou n150', 'Shivam', 1, '10:00 AM', ARRAY['non-technical']),
+('Chou n150', 'Shivam', 1, '10:30 AM', ARRAY['non-technical']),
 ('Chou n150', 'Shivam', 1, '11:00 AM', ARRAY['non-technical']),
+('Chou n150', 'Shivam', 1, '11:30 AM', ARRAY['non-technical']),
 ('Chou n150', 'Shivam', 1, '12:00 PM', ARRAY['non-technical']),
+('Chou n150', 'Shivam', 1, '12:30 PM', ARRAY['non-technical']),
+('Chou n150', 'Shivam', 1, '1:00 PM', ARRAY['non-technical']),
+('Chou n150', 'Shivam', 1, '1:30 PM', ARRAY['non-technical']),
 ('Chou n150', 'Shivam', 1, '2:00 PM', ARRAY['non-technical']),
+('Chou n150', 'Shivam', 1, '2:30 PM', ARRAY['non-technical']),
 ('Chou n150', 'Shivam', 1, '3:00 PM', ARRAY['non-technical']),
+('Chou n150', 'Shivam', 1, '3:30 PM', ARRAY['non-technical']),
 ('Chou n150', 'Shivam', 1, '4:00 PM', ARRAY['non-technical']),
+('Chou n150', 'Shivam', 1, '4:30 PM', ARRAY['non-technical']),
 ('Chou n150', 'Shivam', 1, '5:00 PM', ARRAY['non-technical']);
 
 -- Neal - Tech Hardware & Software (Chou n258)
 INSERT INTO time_slots (room, interviewer, day_of_week, time_slot, interview_types) VALUES
 ('Chou n258', 'Neal', 1, '9:00 AM', ARRAY['tech-hardware', 'tech-software']),
+('Chou n258', 'Neal', 1, '9:30 AM', ARRAY['tech-hardware', 'tech-software']),
 ('Chou n258', 'Neal', 1, '10:00 AM', ARRAY['tech-hardware', 'tech-software']),
+('Chou n258', 'Neal', 1, '10:30 AM', ARRAY['tech-hardware', 'tech-software']),
 ('Chou n258', 'Neal', 1, '11:00 AM', ARRAY['tech-hardware', 'tech-software']),
+('Chou n258', 'Neal', 1, '11:30 AM', ARRAY['tech-hardware', 'tech-software']),
 ('Chou n258', 'Neal', 1, '12:00 PM', ARRAY['tech-hardware', 'tech-software']),
+('Chou n258', 'Neal', 1, '12:30 PM', ARRAY['tech-hardware', 'tech-software']),
+('Chou n258', 'Neal', 1, '1:00 PM', ARRAY['tech-hardware', 'tech-software']),
+('Chou n258', 'Neal', 1, '1:30 PM', ARRAY['tech-hardware', 'tech-software']),
 ('Chou n258', 'Neal', 1, '2:00 PM', ARRAY['tech-hardware', 'tech-software']),
+('Chou n258', 'Neal', 1, '2:30 PM', ARRAY['tech-hardware', 'tech-software']),
 ('Chou n258', 'Neal', 1, '3:00 PM', ARRAY['tech-hardware', 'tech-software']),
+('Chou n258', 'Neal', 1, '3:30 PM', ARRAY['tech-hardware', 'tech-software']),
 ('Chou n258', 'Neal', 1, '4:00 PM', ARRAY['tech-hardware', 'tech-software']),
+('Chou n258', 'Neal', 1, '4:30 PM', ARRAY['tech-hardware', 'tech-software']),
 ('Chou n258', 'Neal', 1, '5:00 PM', ARRAY['tech-hardware', 'tech-software']);
 
 -- Aryaman - Tech Software only (Chou n115)
 INSERT INTO time_slots (room, interviewer, day_of_week, time_slot, interview_types) VALUES
 ('Chou n115', 'Aryaman', 1, '9:00 AM', ARRAY['tech-software']),
+('Chou n115', 'Aryaman', 1, '9:30 AM', ARRAY['tech-software']),
 ('Chou n115', 'Aryaman', 1, '10:00 AM', ARRAY['tech-software']),
+('Chou n115', 'Aryaman', 1, '10:30 AM', ARRAY['tech-software']),
 ('Chou n115', 'Aryaman', 1, '11:00 AM', ARRAY['tech-software']),
+('Chou n115', 'Aryaman', 1, '11:30 AM', ARRAY['tech-software']),
 ('Chou n115', 'Aryaman', 1, '12:00 PM', ARRAY['tech-software']),
+('Chou n115', 'Aryaman', 1, '12:30 PM', ARRAY['tech-software']),
+('Chou n115', 'Aryaman', 1, '1:00 PM', ARRAY['tech-software']),
+('Chou n115', 'Aryaman', 1, '1:30 PM', ARRAY['tech-software']),
 ('Chou n115', 'Aryaman', 1, '2:00 PM', ARRAY['tech-software']),
+('Chou n115', 'Aryaman', 1, '2:30 PM', ARRAY['tech-software']),
 ('Chou n115', 'Aryaman', 1, '3:00 PM', ARRAY['tech-software']),
+('Chou n115', 'Aryaman', 1, '3:30 PM', ARRAY['tech-software']),
 ('Chou n115', 'Aryaman', 1, '4:00 PM', ARRAY['tech-software']),
+('Chou n115', 'Aryaman', 1, '4:30 PM', ARRAY['tech-software']),
 ('Chou n115', 'Aryaman', 1, '5:00 PM', ARRAY['tech-software']);
 
 -- Aryaman - Tech Software only (Haas Library 206)
 INSERT INTO time_slots (room, interviewer, day_of_week, time_slot, interview_types) VALUES
 ('Haas Library 206', 'Aryaman', 1, '9:00 AM', ARRAY['tech-software']),
+('Haas Library 206', 'Aryaman', 1, '9:30 AM', ARRAY['tech-software']),
 ('Haas Library 206', 'Aryaman', 1, '10:00 AM', ARRAY['tech-software']),
+('Haas Library 206', 'Aryaman', 1, '10:30 AM', ARRAY['tech-software']),
 ('Haas Library 206', 'Aryaman', 1, '11:00 AM', ARRAY['tech-software']),
+('Haas Library 206', 'Aryaman', 1, '11:30 AM', ARRAY['tech-software']),
 ('Haas Library 206', 'Aryaman', 1, '12:00 PM', ARRAY['tech-software']),
+('Haas Library 206', 'Aryaman', 1, '12:30 PM', ARRAY['tech-software']),
+('Haas Library 206', 'Aryaman', 1, '1:00 PM', ARRAY['tech-software']),
+('Haas Library 206', 'Aryaman', 1, '1:30 PM', ARRAY['tech-software']),
 ('Haas Library 206', 'Aryaman', 1, '2:00 PM', ARRAY['tech-software']),
+('Haas Library 206', 'Aryaman', 1, '2:30 PM', ARRAY['tech-software']),
 ('Haas Library 206', 'Aryaman', 1, '3:00 PM', ARRAY['tech-software']),
+('Haas Library 206', 'Aryaman', 1, '3:30 PM', ARRAY['tech-software']),
 ('Haas Library 206', 'Aryaman', 1, '4:00 PM', ARRAY['tech-software']),
+('Haas Library 206', 'Aryaman', 1, '4:30 PM', ARRAY['tech-software']),
 ('Haas Library 206', 'Aryaman', 1, '5:00 PM', ARRAY['tech-software']);
