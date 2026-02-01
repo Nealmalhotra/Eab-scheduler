@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
-import { sendConfirmationEmail } from '@/lib/email';
 import crypto from 'crypto';
 
 export async function POST(request: NextRequest) {
@@ -41,32 +40,13 @@ export async function POST(request: NextRequest) {
       [interviewType, room, interviewer, date, timeSlot, name, email, confirmationToken]
     );
 
-    // Send confirmation email
-    const emailResult = await sendConfirmationEmail(
-      email,
-      name,
-      interviewType,
-      room,
-      interviewer,
-      new Date(date).toLocaleDateString(),
-      timeSlot,
-      confirmationToken
-    );
-
-    let message = 'Booking created! Please check your email to confirm.';
-
-    if (emailResult.skipped) {
-      message = `Booking created! Please visit this link to confirm: ${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/confirm/${confirmationToken}`;
-    } else if (!emailResult.success) {
-      console.error('Failed to send confirmation email');
-      message = `Booking created! Please visit this link to confirm: ${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/confirm/${confirmationToken}`;
-    }
+    const confirmationUrl = `https://eab-scheduler.vercel.app/confirm/${confirmationToken}`;
 
     return NextResponse.json({
       success: true,
       bookingId: result.rows[0].id,
-      message,
-      confirmationUrl: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/confirm/${confirmationToken}`,
+      message: 'Booking created! Please visit the link below to confirm.',
+      confirmationUrl,
     });
   } catch (error) {
     console.error('Error creating booking:', error);

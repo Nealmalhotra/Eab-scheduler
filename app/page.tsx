@@ -8,9 +8,6 @@ export default function Home() {
           <h1 className="text-4xl font-bold text-black mb-4">
             Interview Scheduler
           </h1>
-          <p className="text-lg text-gray-700">
-            Select the type of interview you'd like to schedule
-          </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
@@ -20,12 +17,9 @@ export default function Home() {
             className="bg-white border-2 border-black p-8 hover:bg-black hover:text-white transition-colors"
           >
             <div className="text-center">
-              <h3 className="text-xl font-semibold mb-2">
+              <h3 className="text-xl font-semibold">
                 Non-Technical Interview
               </h3>
-              <p className="text-sm">
-                Behavioral and fit interviews
-              </p>
             </div>
           </Link>
 
@@ -35,12 +29,9 @@ export default function Home() {
             className="bg-white border-2 border-black p-8 hover:bg-black hover:text-white transition-colors"
           >
             <div className="text-center">
-              <h3 className="text-xl font-semibold mb-2">
+              <h3 className="text-xl font-semibold">
                 Technical Interview
               </h3>
-              <p className="text-sm">
-                Technical assessment
-              </p>
             </div>
           </Link>
 
@@ -50,12 +41,9 @@ export default function Home() {
             className="bg-white border-2 border-black p-8 hover:bg-black hover:text-white transition-colors"
           >
             <div className="text-center">
-              <h3 className="text-xl font-semibold mb-2">
+              <h3 className="text-xl font-semibold">
                 Technical Interview
               </h3>
-              <p className="text-sm">
-                Technical assessment
-              </p>
             </div>
           </Link>
         </div>

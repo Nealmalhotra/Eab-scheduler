@@ -13,15 +13,12 @@ interface AvailableSlot {
 const interviewTypeConfig = {
   'non-technical': {
     title: 'Non-Technical Interview',
-    description: 'Behavioral and fit interviews',
   },
   'tech-hardware': {
     title: 'Technical Interview',
-    description: 'Technical assessment',
   },
   'tech-software': {
     title: 'Technical Interview',
-    description: 'Technical assessment',
   },
 };
 
@@ -119,7 +116,6 @@ export default function BookingPage() {
           <h1 className="text-3xl font-bold text-black mb-2">
             {config.title}
           </h1>
-          <p className="text-gray-700 mb-2">{config.description}</p>
           <p className="text-sm text-gray-600 mb-8">
             All interviews are on <strong>Monday, February 2, 2026</strong>
           </p>
