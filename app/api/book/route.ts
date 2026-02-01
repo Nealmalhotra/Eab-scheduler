@@ -53,14 +53,20 @@ export async function POST(request: NextRequest) {
       confirmationToken
     );
 
-    if (!emailResult.success) {
+    let message = 'Booking created! Please check your email to confirm.';
+
+    if (emailResult.skipped) {
+      message = `Booking created! Please visit this link to confirm: ${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/confirm/${confirmationToken}`;
+    } else if (!emailResult.success) {
       console.error('Failed to send confirmation email');
+      message = `Booking created! Please visit this link to confirm: ${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/confirm/${confirmationToken}`;
     }
 
     return NextResponse.json({
       success: true,
       bookingId: result.rows[0].id,
-      message: 'Booking created! Please check your email to confirm.',
+      message,
+      confirmationUrl: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/confirm/${confirmationToken}`,
     });
   } catch (error) {
     console.error('Error creating booking:', error);

@@ -20,13 +20,18 @@ export async function sendConfirmationEmail(
   timeSlot: string,
   confirmationToken: string
 ) {
+  // Skip email if SMTP is not configured
+  if (!process.env.SMTP_HOST || !process.env.SMTP_USER) {
+    console.log('Email not configured, skipping email send');
+    return { success: true, skipped: true };
+  }
+
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
   const confirmUrl = `${appUrl}/confirm/${confirmationToken}`;
 
-  const interviewTypeDisplay = interviewType
-    .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+  const interviewTypeDisplay = interviewType === 'non-technical'
+    ? 'Non-Technical Interview'
+    : 'Technical Interview';
 
   const mailOptions = {
     from: process.env.FROM_EMAIL,
@@ -34,23 +39,22 @@ export async function sendConfirmationEmail(
     subject: 'Confirm Your Interview Appointment',
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #22c55e;">Interview Confirmation Required</h2>
+        <h2 style="color: #000;">Interview Confirmation Required</h2>
         <p>Hi ${name},</p>
         <p>You've scheduled an interview. Please confirm your appointment by clicking the link below:</p>
 
-        <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <div style="background-color: #f3f4f6; padding: 20px; border: 2px solid #000; margin: 20px 0;">
           <p style="margin: 5px 0;"><strong>Interview Type:</strong> ${interviewTypeDisplay}</p>
           <p style="margin: 5px 0;"><strong>Date:</strong> ${date}</p>
           <p style="margin: 5px 0;"><strong>Time:</strong> ${timeSlot}</p>
           <p style="margin: 5px 0;"><strong>Room:</strong> ${room}</p>
-          <p style="margin: 5px 0;"><strong>Interviewer:</strong> ${interviewer}</p>
         </div>
 
-        <a href="${confirmUrl}" style="display: inline-block; background-color: #22c55e; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin: 20px 0;">
+        <a href="${confirmUrl}" style="display: inline-block; background-color: #000; color: white; padding: 12px 24px; text-decoration: none; margin: 20px 0;">
           Confirm Appointment
         </a>
 
-        <p style="color: #6b7280; font-size: 14px; margin-top: 30px;">
+        <p style="color: #666; font-size: 14px; margin-top: 30px;">
           If you didn't request this appointment, please ignore this email.
         </p>
       </div>

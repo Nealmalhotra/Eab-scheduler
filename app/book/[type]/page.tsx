@@ -41,6 +41,7 @@ export default function BookingPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [confirmationUrl, setConfirmationUrl] = useState('');
 
   useEffect(() => {
     fetchAvailableSlots();
@@ -94,9 +95,16 @@ export default function BookingPage() {
       }
 
       setSuccess(data.message);
-      setTimeout(() => {
-        router.push('/');
-      }, 3000);
+      if (data.confirmationUrl) {
+        setConfirmationUrl(data.confirmationUrl);
+      }
+
+      // Don't auto-redirect if we need to show confirmation link
+      if (!data.confirmationUrl) {
+        setTimeout(() => {
+          router.push('/');
+        }, 3000);
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to book slot');
     } finally {
@@ -118,7 +126,15 @@ export default function BookingPage() {
 
           {success && (
             <div className="bg-black text-white px-4 py-3 mb-6">
-              {success}
+              <p>{success}</p>
+              {confirmationUrl && (
+                <a
+                  href={confirmationUrl}
+                  className="underline hover:no-underline mt-2 block"
+                >
+                  Click here to confirm now
+                </a>
+              )}
             </div>
           )}
 

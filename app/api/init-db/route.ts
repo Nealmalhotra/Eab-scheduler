@@ -38,6 +38,8 @@ export async function POST() {
     const existingSlots = await query('SELECT COUNT(*) FROM time_slots', []);
     const count = parseInt(existingSlots.rows[0].count);
 
+    let slotsInserted = 0;
+
     if (count === 0) {
       // Insert default time slots (Monday = 1) - 30 minute intervals
       const timeSlots = [
@@ -99,13 +101,15 @@ export async function POST() {
           [slot.room, slot.interviewer, slot.day, slot.time, slot.types]
         );
       }
+
+      slotsInserted = slots.length;
     }
 
     return NextResponse.json({
       success: true,
       message: 'Database initialized successfully',
       tablesCreated: ['bookings', 'time_slots'],
-      slotsInserted: count === 0 ? slots.length : 0,
+      slotsInserted,
     });
   } catch (error: any) {
     console.error('Database initialization error:', error);
