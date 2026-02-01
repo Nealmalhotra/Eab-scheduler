@@ -38,7 +38,6 @@ export default function BookingPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [confirmationUrl, setConfirmationUrl] = useState('');
 
   useEffect(() => {
     fetchAvailableSlots();
@@ -92,16 +91,11 @@ export default function BookingPage() {
       }
 
       setSuccess(data.message);
-      if (data.confirmationUrl) {
-        setConfirmationUrl(data.confirmationUrl);
-      }
-
-      // Don't auto-redirect if we need to show confirmation link
-      if (!data.confirmationUrl) {
-        setTimeout(() => {
-          router.push('/');
-        }, 3000);
-      }
+      
+      // Auto-redirect after 2 seconds
+      setTimeout(() => {
+        router.push('/');
+      }, 2000);
     } catch (err: any) {
       setError(err.message || 'Failed to book slot');
     } finally {
@@ -111,7 +105,7 @@ export default function BookingPage() {
 
   return (
     <div className="min-h-screen bg-white p-4">
-      <div className="max-w-2xl mx-auto py-8">
+      <div className="max-w-6xl mx-auto py-8">
         <div className="border-2 border-black p-8">
           <h1 className="text-3xl font-bold text-black mb-2">
             {config.title}
@@ -123,14 +117,6 @@ export default function BookingPage() {
           {success && (
             <div className="bg-black text-white px-4 py-3 mb-6">
               <p>{success}</p>
-              {confirmationUrl && (
-                <a
-                  href={confirmationUrl}
-                  className="underline hover:no-underline mt-2 block"
-                >
-                  Click here to confirm now
-                </a>
-              )}
             </div>
           )}
 
@@ -140,79 +126,87 @@ export default function BookingPage() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Time Slot Selection */}
-            <div>
-              <label className="block text-sm font-medium text-black mb-2">
-                Select Time Slot
-              </label>
-              {availableSlots.length === 0 ? (
-                <p className="text-gray-600 text-sm">
-                  No slots available
-                </p>
-              ) : (
-                <div className="grid gap-3">
-                  {availableSlots.map((slot, idx) => (
+          <form onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Left Side - Time Slot Selection */}
+              <div>
+                <label className="block text-sm font-medium text-black mb-2">
+                  Select Time Slot
+                </label>
+                {availableSlots.length === 0 ? (
+                  <p className="text-gray-600 text-sm">
+                    No slots available
+                  </p>
+                ) : (
+                  <div className="grid gap-3">
+                    {availableSlots.map((slot, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setSelectedSlot(slot)}
+                        className={`p-4 border-2 text-left transition-all ${
+                          selectedSlot === slot
+                            ? 'border-black bg-black text-white'
+                            : 'border-black bg-white hover:bg-gray-100'
+                        }`}
+                      >
+                        <div className="font-semibold">
+                          {slot.time_slot}
+                        </div>
+                        <div className="text-sm">
+                          {slot.room}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Right Side - Personal Information */}
+              <div>
+                {selectedSlot ? (
+                  <div className="space-y-6">
+                    <div>
+                      <label className="block text-sm font-medium text-black mb-2">
+                        Full Name
+                      </label>
+                      <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="w-full px-4 py-2 border-2 border-black focus:outline-none"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-black mb-2">
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full px-4 py-2 border-2 border-black focus:outline-none"
+                        required
+                      />
+                    </div>
+
                     <button
-                      key={idx}
-                      type="button"
-                      onClick={() => setSelectedSlot(slot)}
-                      className={`p-4 border-2 text-left transition-all ${
-                        selectedSlot === slot
-                          ? 'border-black bg-black text-white'
-                          : 'border-black bg-white hover:bg-gray-100'
-                      }`}
+                      type="submit"
+                      disabled={loading}
+                      className="w-full bg-black text-white py-3 font-semibold hover:bg-gray-800 transition-colors disabled:bg-gray-400"
                     >
-                      <div className="font-semibold">
-                        {slot.time_slot}
-                      </div>
-                      <div className="text-sm">
-                        {slot.room}
-                      </div>
+                      {loading ? 'Booking...' : 'Book Interview'}
                     </button>
-                  ))}
-                </div>
-              )}
+                  </div>
+                ) : (
+                  <div className="text-gray-500 text-sm">
+                    Select a time slot to continue
+                  </div>
+                )}
+              </div>
             </div>
-
-            {/* Personal Information */}
-            {selectedSlot && (
-              <>
-                <div>
-                  <label className="block text-sm font-medium text-black mb-2">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full px-4 py-2 border-2 border-black focus:outline-none"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-black mb-2">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-2 border-2 border-black focus:outline-none"
-                    required
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full bg-black text-white py-3 font-semibold hover:bg-gray-800 transition-colors disabled:bg-gray-400"
-                >
-                  {loading ? 'Booking...' : 'Book Interview'}
-                </button>
-              </>
-            )}
           </form>
         </div>
       </div>

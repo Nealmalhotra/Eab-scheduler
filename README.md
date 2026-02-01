@@ -5,27 +5,29 @@ A specialized interview scheduling application for managing multiple interview t
 ## Features
 
 - **3 Interview Types:**
-  - Non-Technical (Behavioral and fit interviews with Shivam)
-  - Technical Hardware (Hardware and embedded systems with Neal)
-  - Technical Software (Software development with Neal or Aryaman)
+  - Non-Technical (Behavioral and fit interviews)
+  - Technical Hardware (Hardware and embedded systems)
+  - Technical Software (Software development)
 
-- **4 Rooms:**
+- **6 Rooms:**
   - Chou n150 (Non-technical only)
   - Chou n258 (Hardware & Software)
   - Chou n115 (Software only)
   - Haas Library 206 (Software only)
+  - Haas Library 207 (Software only)
+  - Haas Courtyard (Software only)
 
-- **Email Confirmation System:** Applicants receive confirmation emails and must confirm their booking
+- **Instant Booking:** Bookings are automatically confirmed upon submission
 - **Admin Dashboard:** View all bookings, filter by status, and search
 - **Smart Scheduling:** Prevents double-booking and shows only available slots
+- **Interviewer Pairs:** Each interview slot has 2 interviewers working together
 
 ## Tech Stack
 
 - Next.js 15 (App Router)
 - TypeScript
 - Tailwind CSS
-- PostgreSQL (without Prisma)
-- Nodemailer (for email confirmations)
+- PostgreSQL
 
 ## Setup Instructions
 
@@ -33,7 +35,6 @@ A specialized interview scheduling application for managing multiple interview t
 
 - Node.js 18+ installed
 - PostgreSQL database
-- SMTP credentials for sending emails (e.g., Gmail)
 
 ### 1. Clone and Install
 
@@ -75,18 +76,9 @@ Edit `.env` and add your configuration:
 # Database
 DATABASE_URL=postgresql://username:password@host:port/database
 
-# Email (for confirmation emails)
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your-email@gmail.com
-SMTP_PASS=your-app-password
-FROM_EMAIL=your-email@gmail.com
-
-# App URL
+# App URL (optional)
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
-
-**Note for Gmail users:** You need to create an [App Password](https://support.google.com/accounts/answer/185833) instead of using your regular Gmail password.
 
 ### 4. Customize Time Slots (Optional)
 
@@ -117,10 +109,10 @@ The application will be available at `http://localhost:3000`
 
 1. Visit the home page
 2. Select your interview type (Non-technical, Tech Hardware, or Tech Software)
-3. Choose a date and available time slot
+3. Choose an available time slot and room
 4. Enter your name and email
 5. Click "Book Interview"
-6. Check your email and click the confirmation link
+6. Your interview is instantly confirmed!
 
 ### For Admins
 
@@ -136,22 +128,22 @@ The application will be available at `http://localhost:3000`
 - `id`: Serial primary key
 - `interview_type`: Type of interview
 - `room`: Room name
-- `interviewer`: Interviewer name
+- `interviewer`: Interviewer pair (e.g., "Shivam & Juhi")
 - `date`: Interview date
 - `time_slot`: Time slot (e.g., "9:00 AM")
 - `applicant_name`: Applicant's name
 - `applicant_email`: Applicant's email
-- `confirmed`: Boolean confirmation status
-- `confirmation_token`: Unique token for email confirmation
+- `confirmed`: Boolean confirmation status (auto-set to true)
+- `confirmation_token`: Unique token (for database schema compatibility)
 - `created_at`: Timestamp
 
 ### `time_slots` Table
 
 - `id`: Serial primary key
 - `room`: Room name
-- `interviewer`: Interviewer name
-- `day_of_week`: Day of week (0-6)
-- `time_slot`: Time slot
+- `interviewer`: Interviewer pair (e.g., "Neal & Deeya")
+- `day_of_week`: Day of week (0-6, where 1 = Monday)
+- `time_slot`: Time slot (e.g., "10:00 AM")
 - `interview_types`: Array of supported interview types
 
 ## Customization
@@ -165,18 +157,8 @@ The application will be available at `http://localhost:3000`
 
 Edit `scripts/init-db.sql` and re-run it to update available time slots.
 
-### Email Templates
-
-Edit `lib/email.ts` to customize the confirmation email template.
 
 ## Troubleshooting
-
-### Email not sending
-
-- Check your SMTP credentials in `.env`
-- For Gmail, ensure you're using an App Password
-- Check your SMTP host and port settings
-- Look at the server logs for detailed error messages
 
 ### Database connection issues
 

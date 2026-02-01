@@ -28,25 +28,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate confirmation token
+    // Generate confirmation token (still needed for database schema)
     const confirmationToken = crypto.randomBytes(32).toString('hex');
 
-    // Create booking
+    // Create booking - auto-confirmed
     const result = await query(
       `INSERT INTO bookings
        (interview_type, room, interviewer, date, time_slot, applicant_name, applicant_email, confirmation_token, confirmed)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, false)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, true)
        RETURNING id`,
       [interviewType, room, interviewer, date, timeSlot, name, email, confirmationToken]
     );
 
-    const confirmationUrl = `https://eab-scheduler.vercel.app/confirm/${confirmationToken}`;
-
     return NextResponse.json({
       success: true,
       bookingId: result.rows[0].id,
-      message: 'Booking created! Please visit the link below to confirm.',
-      confirmationUrl,
+      message: 'Interview booked successfully!',
     });
   } catch (error) {
     console.error('Error creating booking:', error);
