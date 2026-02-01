@@ -63,9 +63,22 @@ I initially misunderstood your schedule. You clarified:
 5. `scripts/init-db.sql` - SQL script with correct data
 6. `DATABASE_RESET.md` - Updated instructions
 
-## Latest Update
+## Latest Updates
 
+### Haas Courtyard Slots
 Added 2 new time slots at Haas Courtyard (4:00 PM and 4:30 PM) with Aryaman & Deeya for tech-software interviews.
+
+### Auto-Confirmation
+- Removed email confirmation requirement
+- Bookings are now **instantly confirmed** upon submission
+- Success message shows for 2 seconds, then auto-redirects to home
+- Simplified booking flow for better user experience
+
+### UI Improvements
+- Time slots now appear on the left side
+- Name/email form appears on the right side
+- Side-by-side layout on desktop, stacked on mobile
+- Cleaner, more organized interface
 
 ## Deployment Steps
 

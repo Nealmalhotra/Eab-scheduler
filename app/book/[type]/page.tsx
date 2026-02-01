@@ -90,12 +90,13 @@ export default function BookingPage() {
         throw new Error(data.error || 'Failed to book slot');
       }
 
-      setSuccess(data.message);
+      setSuccess(`${selectedSlot.time_slot} at ${selectedSlot.room}`);
       
-      // Auto-redirect after 2 seconds
-      setTimeout(() => {
-        router.push('/');
-      }, 2000);
+      // Reset form and refresh available slots
+      setName('');
+      setEmail('');
+      setSelectedSlot(null);
+      fetchAvailableSlots();
     } catch (err: any) {
       setError(err.message || 'Failed to book slot');
     } finally {
@@ -116,7 +117,24 @@ export default function BookingPage() {
 
           {success && (
             <div className="bg-black text-white px-4 py-3 mb-6">
-              <p>{success}</p>
+              <div className="flex justify-between items-start">
+                <div>
+                  <p className="font-semibold text-lg mb-1">Booking Confirmed!</p>
+                  <p className="text-sm">{success}</p>
+                </div>
+                <button
+                  onClick={() => {
+                    setSuccess('');
+                    setSelectedSlot(null);
+                    setName('');
+                    setEmail('');
+                    fetchAvailableSlots();
+                  }}
+                  className="text-white hover:text-gray-300 ml-4"
+                >
+                  ✕
+                </button>
+              </div>
             </div>
           )}
 
