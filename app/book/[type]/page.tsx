@@ -35,7 +35,9 @@ export default function BookingPage() {
   const interviewType = params.type as InterviewType;
   const config = interviewTypeConfig[interviewType];
 
-  const [selectedDate, setSelectedDate] = useState('');
+  // Fixed date: Monday, February 2, 2026
+  const INTERVIEW_DATE = '2026-02-02';
+
   const [availableSlots, setAvailableSlots] = useState<AvailableSlot[]>([]);
   const [selectedSlot, setSelectedSlot] = useState<AvailableSlot | null>(null);
   const [name, setName] = useState('');
@@ -45,15 +47,13 @@ export default function BookingPage() {
   const [success, setSuccess] = useState('');
 
   useEffect(() => {
-    if (selectedDate) {
-      fetchAvailableSlots();
-    }
-  }, [selectedDate]);
+    fetchAvailableSlots();
+  }, []);
 
   const fetchAvailableSlots = async () => {
     try {
       const response = await fetch(
-        `/api/slots?type=${interviewType}&date=${selectedDate}`
+        `/api/slots?type=${interviewType}&date=${INTERVIEW_DATE}`
       );
       if (!response.ok) throw new Error('Failed to fetch slots');
       const data = await response.json();
@@ -84,7 +84,7 @@ export default function BookingPage() {
           interviewType,
           room: selectedSlot.room,
           interviewer: selectedSlot.interviewer,
-          date: selectedDate,
+          date: INTERVIEW_DATE,
           timeSlot: selectedSlot.time_slot,
           name,
           email,
@@ -108,9 +108,6 @@ export default function BookingPage() {
     }
   };
 
-  // Get minimum date (today)
-  const today = new Date().toISOString().split('T')[0];
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 p-4">
       <div className="max-w-2xl mx-auto py-8">
@@ -125,7 +122,10 @@ export default function BookingPage() {
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             {config.title}
           </h1>
-          <p className="text-gray-600 mb-8">{config.description}</p>
+          <p className="text-gray-600 mb-2">{config.description}</p>
+          <p className="text-sm text-gray-500 mb-8">
+            All interviews are on <strong>Monday, February 2, 2026</strong>
+          </p>
 
           {success && (
             <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
@@ -140,56 +140,39 @@ export default function BookingPage() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Date Selection */}
+            {/* Time Slot Selection */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Select Date
+                Select Time Slot
               </label>
-              <input
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                min={today}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                required
-              />
+              {availableSlots.length === 0 ? (
+                <p className="text-gray-500 text-sm">
+                  No slots available
+                </p>
+              ) : (
+                <div className="grid gap-3">
+                  {availableSlots.map((slot, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setSelectedSlot(slot)}
+                      className={`p-4 border-2 rounded-lg text-left transition-all ${
+                        selectedSlot === slot
+                          ? 'border-green-500 bg-green-50'
+                          : 'border-gray-200 hover:border-green-300'
+                      }`}
+                    >
+                      <div className="font-semibold text-gray-900">
+                        {slot.time_slot}
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        {slot.room} - {slot.interviewer}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
-
-            {/* Time Slot Selection */}
-            {selectedDate && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Select Time Slot
-                </label>
-                {availableSlots.length === 0 ? (
-                  <p className="text-gray-500 text-sm">
-                    No slots available for this date
-                  </p>
-                ) : (
-                  <div className="grid gap-3">
-                    {availableSlots.map((slot, idx) => (
-                      <button
-                        key={idx}
-                        type="button"
-                        onClick={() => setSelectedSlot(slot)}
-                        className={`p-4 border-2 rounded-lg text-left transition-all ${
-                          selectedSlot === slot
-                            ? 'border-green-500 bg-green-50'
-                            : 'border-gray-200 hover:border-green-300'
-                        }`}
-                      >
-                        <div className="font-semibold text-gray-900">
-                          {slot.time_slot}
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          {slot.room} - {slot.interviewer}
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
 
             {/* Personal Information */}
             {selectedSlot && (
