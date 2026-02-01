@@ -18,7 +18,7 @@ I initially misunderstood your schedule. You clarified:
 ### Database Structure
 - **Constraint**: `UNIQUE(room, date, time_slot)` - only one interview per room at a time
 - **Interviewer field**: Stores pairs like "Shivam & Juhi" or "Neal & Deeya"
-- **Total slots**: 43 interview slots across the week
+- **Total slots**: 47 interview slots across the week
 
 ### Schedule Details
 
@@ -49,18 +49,23 @@ I initially misunderstood your schedule. You clarified:
 - Chou n258: Neal & Leon (tech-hardware, tech-software)
 - Chou n115: Aryaman & Deeya (tech-software)
 
-**4:00 PM - 4:30 PM** (2 slots each):
+**4:00 PM - 4:30 PM** (3 slots each):
 - Chou n150: Shivam & Casey (non-technical)
 - Chou n258: Neal & Leon (tech-hardware, tech-software)
+- Haas Courtyard: Aryaman & Deeya (tech-software)
 
 ## Files Changed
 
-1. `app/api/init-db/route.ts` - Correct schema and 43 interview slots
+1. `app/api/init-db/route.ts` - Correct schema and 47 interview slots
 2. `app/api/reset-db/route.ts` - Reset with correct data
 3. `app/api/slots/route.ts` - Filter by room (not interviewer)
 4. `app/book/[type]/page.tsx` - Show only room names (no interviewer names)
 5. `scripts/init-db.sql` - SQL script with correct data
 6. `DATABASE_RESET.md` - Updated instructions
+
+## Latest Update
+
+Added 2 new time slots at Haas Courtyard (4:00 PM and 4:30 PM) with Aryaman & Deeya for tech-software interviews.
 
 ## Deployment Steps
 

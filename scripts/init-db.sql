@@ -96,10 +96,12 @@ INSERT INTO time_slots (room, interviewer, day_of_week, time_slot, interview_typ
 ('Chou n258', 'Neal & Leon', 1, '3:30 PM', ARRAY['tech-hardware', 'tech-software']),
 ('Chou n115', 'Aryaman & Deeya', 1, '3:30 PM', ARRAY['tech-software']),
 
--- 4:00 PM: 2 slots
+-- 4:00 PM: 3 slots
 ('Chou n150', 'Shivam & Casey', 1, '4:00 PM', ARRAY['non-technical']),
 ('Chou n258', 'Neal & Leon', 1, '4:00 PM', ARRAY['tech-hardware', 'tech-software']),
+('Haas Courtyard', 'Aryaman & Deeya', 1, '4:00 PM', ARRAY['tech-software']),
 
--- 4:30 PM: 2 slots
+-- 4:30 PM: 3 slots
 ('Chou n150', 'Shivam & Casey', 1, '4:30 PM', ARRAY['non-technical']),
-('Chou n258', 'Neal & Leon', 1, '4:30 PM', ARRAY['tech-hardware', 'tech-software']);
+('Chou n258', 'Neal & Leon', 1, '4:30 PM', ARRAY['tech-hardware', 'tech-software']),
+('Haas Courtyard', 'Aryaman & Deeya', 1, '4:30 PM', ARRAY['tech-software']);

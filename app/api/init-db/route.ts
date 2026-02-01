@@ -106,13 +106,15 @@ export async function POST() {
         { room: 'Chou n258', interviewer: 'Neal & Leon', day: 1, time: '3:30 PM', types: ['tech-hardware', 'tech-software'] },
         { room: 'Chou n115', interviewer: 'Aryaman & Deeya', day: 1, time: '3:30 PM', types: ['tech-software'] },
         
-        // 4:00 PM: 2 slots
+        // 4:00 PM: 3 slots
         { room: 'Chou n150', interviewer: 'Shivam & Casey', day: 1, time: '4:00 PM', types: ['non-technical'] },
         { room: 'Chou n258', interviewer: 'Neal & Leon', day: 1, time: '4:00 PM', types: ['tech-hardware', 'tech-software'] },
+        { room: 'Haas Courtyard', interviewer: 'Aryaman & Deeya', day: 1, time: '4:00 PM', types: ['tech-software'] },
         
-        // 4:30 PM: 2 slots
+        // 4:30 PM: 3 slots
         { room: 'Chou n150', interviewer: 'Shivam & Casey', day: 1, time: '4:30 PM', types: ['non-technical'] },
         { room: 'Chou n258', interviewer: 'Neal & Leon', day: 1, time: '4:30 PM', types: ['tech-hardware', 'tech-software'] },
+        { room: 'Haas Courtyard', interviewer: 'Aryaman & Deeya', day: 1, time: '4:30 PM', types: ['tech-software'] },
       ];
 
       for (const slot of slots) {
